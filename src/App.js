@@ -4,9 +4,14 @@ import { Box } from "@mui/material"
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import ExerciseDetail from "./pages/ExerciseDetails"
+import { StrictMode } from 'react';
+
+
 import Footer from "./components/Footer"
 function App() {
   return (
+    <StrictMode>
+
   <Box width="400px" sx={{ width: { xl: "1488px" } }} m="auto">
     <Navbar />
     <Routes>
@@ -15,6 +20,8 @@ function App() {
     </Routes>
     <Footer />
   </Box>
+      </StrictMode>
+
   )
 }
 
