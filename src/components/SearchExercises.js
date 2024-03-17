@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from "react"
 import { Box, Button, Stack, Typography, TextField } from "@mui/material"
-const SearchExercises = () => {
+import { exerciseOptions, fetchData } from "../utils/fetchData"
+import HorizontalScrollBar from "./HorizontalScrollBar"
+const SearchExercises = ({setExercises, bodyPart, setBodyPart}) => {
   const [search, setSearch] = useState("")
-
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      const bodyPartsData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        exerciseOptions
+      )
+      // setBodyParts(["all", ...bodyPartsData])
+    }
+    fetchExercisesData()
+  }, [])
   const handleSearch = async () => {
-if(search){
-  // const exerciseData = await fetchData()
-}
+    if (search) {
+      const exerciseData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises",
+        exerciseOptions
+      )
+      console.log(exerciseData)
+      const searchedExercises = exerciseData.filter((exercise) => {
+        exercise.name.toLowerCase().includes(search) ||
+          exercise.target.toLowerCase().includes(search) ||
+          exercise.equipment.toLowerCase().includes(search) ||
+          exercise.bodyPart.toLowerCase().includes(search)
+        setSearch("")
+        setExercises(searchedExercises)
+      })
+    }
   }
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
@@ -22,7 +45,7 @@ if(search){
         <TextField
           height="76px"
           value={search}
-          onChange={(e) => setSearch(e.target.value.toLowerCase)}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="search exercises"
           sx={{
             input: { fontWeight: "700px", border: "none", borderRadius: "4px" },
@@ -43,7 +66,7 @@ if(search){
               xs: "14px",
               height: "56px",
               position: "absolute",
-              right: "0"
+              right: "0",
             },
           }}
           onClick={handleSearch}
@@ -51,6 +74,10 @@ if(search){
           Search
         </Button>
       </Box>
+      <Box sx={{position: "relative", width: "100%", p: "20px"}}>
+
+        <HorizontalScrollBar setBodyPart={setBodyPart}  data={bodyPart} bodyPart={bodyPart}   />
+        </Box>
     </Stack>
   )
 }
