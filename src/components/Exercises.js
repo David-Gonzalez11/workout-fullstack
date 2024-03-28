@@ -4,15 +4,10 @@ import { Box, Stack, Typography } from "@mui/material"
 import { exerciseOptions, fetchData } from "../utils/fetchData"
 import ExerciseCard from "../components/ExerciseCard"
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const exercisePerPage = 9
-  const indexOfLastExercise = currentPage * exercisePerPage
+  const [currentPage, setCurrentPage] = useState(1);
+  const [exercisesPerPage] = useState(6);
 
-  const indexOfFirstExercise = indexOfLastExercise - exercisePerPage
-  const currentExercises = exercises.slice(
-    indexOfFirstExercise,
-    indexOfLastExercise
-  )
+
 
   console.log(exercises)
   const paginate = (e, value) => {
@@ -39,6 +34,10 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     }
     fetchExercisesData()
   }, [bodyPart, setExercises])
+ const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+
   return (
     <Box
       id="exercises"
@@ -68,7 +67,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
           color="standard"
           shape="rounded"
           defaultPage={1}
-          count={Math.ceil(exercisePerPage)}
+          count={Math.ceil(exercisesPerPage)}
           page={currentPage}
           onChange={paginate}
           size="large"

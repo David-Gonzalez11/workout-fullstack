@@ -16,7 +16,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
       setBodyParts(["all", ...bodyPartsData])
     }
     fetchExercisesData()
-  }, [])
+  }, [bodyParts])
   const handleSearch = async () => {
     if (search) {
       const exerciseData = await fetchData(
@@ -84,6 +84,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           setBodyPart={setBodyPart}
           data={bodyParts}
           bodyPart={bodyPart}
+          isBodyParts
         />
       </Box>
     </Stack>
