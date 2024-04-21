@@ -26,7 +26,7 @@ const Details = ({ exerciseDetail }) => {
     >
       <img src={gifUrl} alt={name} loading="lazy" className="detail-image" />
       <Stack sx={{ gap: { lg: "35px", xs: "20px" } }}>
-        <Typography varinat="h3">{name}</Typography>
+        <Typography variant="h3">{name}</Typography>
         <Typography variant="h6">
           Exercises keep ypu strong.
           {name} {` `}is one of the best exercises to target your {target}. It
